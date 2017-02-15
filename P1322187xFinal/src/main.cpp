@@ -23,7 +23,7 @@
 using namespace std;
 using namespace sf;
 
-
+bool bStart = false; 
 /**
 The entry point for the application.
 */
@@ -34,7 +34,6 @@ int main()
 
 	RenderWindow window(VideoMode(1024,768), "RadRacer", Style::Close | Style::Titlebar); //!< render window
 	window.setFramerateLimit(60);
-	float fFrameTime(1.0f / 60.0f); // fps
 	float fTimePassed;
 
 
@@ -44,7 +43,7 @@ int main()
 	View MiniMap;
 	View HUD;
 
-	MiniMap.zoom(5); 
+	MiniMap.zoom(3); 
 
 	MainGame.setSize(Vector2f(window.getSize()));
 	HUD.setSize(Vector2f(window.getSize()));
@@ -58,31 +57,56 @@ int main()
 		{
 			if (event.type == Event::Closed)
 				window.close();
+
+
+			if (event.type == Event::KeyPressed)
+			{
+				gMaster.KeyPress(event.key.code);
+			}
+			if (event.type == Event::KeyReleased)
+			{
+				gMaster.KeyRelease(event.key.code);
+			}
+			if (event.type == Event::MouseButtonReleased)
+			{
+				if (event.mouseButton.button == Mouse::Left)
+
+				{
+					Vector2f x;
+					x = window.mapPixelToCoords(Mouse::getPosition(window), MainGame);
+					std::cout << x.x << ", " << x.y << std::endl;
+				}
+			}
+
 		}
 
-		if (timer.getElapsedTime().asSeconds() > fFrameTime)
+		if (timer.getElapsedTime().asSeconds() > 0.006)
 		{
 			
 			fTimePassed = timer.getElapsedTime().asSeconds();
 			gMaster.update(fTimePassed);
-			MainGame.setCenter(gMaster.getCarPos());
+			gMaster.ViewLimits(&MainGame, gMaster.getCarPos());
 
-			MiniMap.setViewport(FloatRect(0.5f, 0.0f, 0.2f, 0.2f));
+			MiniMap.setViewport(FloatRect(0.75f, 0.0f, 0.25f, 0.3f));
 			MiniMap.setCenter(100, 100); // tweek
 
 			timer.restart();
 		}
-		
+		if (bStart == false)
+			MainGame.setCenter(0, 0);
+
 		window.setView(MainGame);
-		window.clear(Color::Green);
+		window.clear(Color::Cyan);
 		window.draw(gMaster);
 
-		window.setView(MiniMap);
-		window.draw(gMaster);
+		if (bStart == true)
+		{
+			window.setView(MiniMap);
+			window.draw(gMaster);
 
-		window.setView(HUD);
-		window.draw(gMaster.m_HUD);
-
+			window.setView(HUD);
+			window.draw(gMaster.m_HUD);
+		}
 		window.display();
 	}
 

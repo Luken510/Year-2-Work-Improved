@@ -26,20 +26,28 @@ class car : public AABB
 private:
 	
 	float m_fRotationAngle; //!< instantiate the rotationAngle of which the car rotates
-	float fDirection = 0; //!< instantiate the direction of the car
-	float fSpeed = 600.0f; //!< instantiate the speed of the car
 	RectangleShape m_FrontWheel[2]; //!< Front wheels
 	RectangleShape m_RearWheel[2]; //!< Rear wheels
 	float m_fWheelAngle; //!< Angle of which my wheels will be facing
-	Vector2f m_RotationVector; //!< The Direction of the car/sprite
+	sf::Vector2f m_RotationVector; //!< The Direction of the car/sprite
+	int m_aiAccelerationPower[5]; //!< Power of current Acceleration
+	float m_afGears[6]; //!< Multiplys the gear by the current power, max gear = 1* accleration
+	
+	float m_CarTurningAngle; //!< current angle cars turns
+
 
 public:
+	bool m_TurningRight = 0; //!< sets the direction of turning to right
+	bool m_TurningLeft = 0; //!< sets the direction of turning to left
+	int m_iPower; //!< Power of the acclerator
+	int m_iGear; //!< The gears of the car
+	float fDirection = 0; //!< instantiate the direction of the car
 	Sprite m_Sprite; //!< instantiate the sprite that will use the texture
 
 	car(); //!< default constructor 
 
 
-	car(Vector2f vPos, Vector2f vAcce, float InvMass, Vector2f Velo);
+	car(sf::Vector2f vPos, sf::Vector2f vAcce, float InvMass, sf::Vector2f Velo);
 
 
 	/**
@@ -69,14 +77,14 @@ public:
 	Virtual function collides
 	\param *other. used for double dispatch - base class
 	*/
-	bool collides(Collidable *other);
+	void collides(Collidable *other);
 
 
 	/**
 	Virtual function collides
 	\param *other. used for double dispatch - Tyre Class
 	*/
-	bool collides(Tyres *other);
+	void collides(Tyres *other);
 
 	bool DetectingCollisions(Tyres *other); //!< function that does a wide scope intercept check
 
@@ -87,7 +95,11 @@ public:
 	bool DetectingLapCollisions(sf::FloatRect *other); //!< function used to check where the car is on the lap
 
 
-	void SetTexture(vector<Texture>::iterator Texture);
+	void SetTexture(std::vector<Texture>::iterator Texture);
+
+	void Turning();
+
+	void ChangeGear(float timestep);
 };
 
 

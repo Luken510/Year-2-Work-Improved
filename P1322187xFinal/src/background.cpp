@@ -18,9 +18,10 @@ sets the texture(loads image from file)
 sets the origin of the texture
 sets the position of the texture
 */
-background::background(vector<Texture>::iterator GameBGTexture, Vector2f Pos)
+background::background(vector<Texture>::iterator GameBGTexture, Vector2f Pos, float scale)
 {
 	setTexture(*GameBGTexture);
 	setOrigin(getLocalBounds().width / 2.0f, getLocalBounds().height / 2.0f);
+	setScale(scale, scale);
 	setPosition(Pos);
 }

@@ -35,30 +35,35 @@ HUD::HUD()
 	tLaptimeText.setString(to_string(c_Laptimer.getElapsedTime().asSeconds()));
 	tLaptimeText.setPosition(200.0f, 300.0f);
 	tLaptimeText.setCharacterSize(17);
+	tLaptimeText.setStyle(sf::Text::Bold);
 
 	fFirstTime = 420;
 	tFirstLapText.setFont(font);
 	tFirstLapText.setPosition(200.0f, 325.0f);
 	tFirstLapText.setCharacterSize(17);
+	tFirstLapText.setStyle(sf::Text::Bold);
 
 	fBestTime = 420;
 	tBestLapText.setFont(font);
 	tBestLapText.setPosition(200.0f, 350.0f);
 	tBestLapText.setCharacterSize(17);
+	tBestLapText.setStyle(sf::Text::Bold);
 
-	r_LapTimerBG.setSize(sf::Vector2f(90, 90));
+	r_LapTimerBG.setSize(sf::Vector2f(200, 90));
 	r_LapTimerBG.setFillColor(sf::Color::Black);
 
-	fr_LapStart.height = 70.0f;
-	fr_LapStart.width = 100.0f;
-	fr_LapStart.left = 400.0f;
-	fr_LapStart.top = 80.0f;
+	fr_LapStart.height = 200.0f;
+	fr_LapStart.width = 200.0f;
+	fr_LapStart.left = -50.0f;
+	fr_LapStart.top = -1000.0f;
 
-	fr_Halfway.height = 100.0f;
-	fr_Halfway.width = 50.0f;
-	fr_Halfway.left = 400.0f;
-	fr_Halfway.top = 450.0f;
+	fr_Halfway.height = 200.0f;
+	fr_Halfway.width = 200.0f;
+	fr_Halfway.left = 0.0f;
+	fr_Halfway.top = -400.0f;
 
+	
+	
 }
 // draw function
 void HUD::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -74,7 +79,7 @@ void HUD::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void HUD::Update()
 {
 	fLaptime = c_Laptimer.getElapsedTime().asSeconds();
-	tLaptimeText.setString(to_string(c_Laptimer.getElapsedTime().asSeconds()));
+	tLaptimeText.setString("Current Lap: " + to_string(c_Laptimer.getElapsedTime().asSeconds()));
 }
 // sets the first timers position
 void HUD::setTime1Position(float x, float y)
@@ -103,18 +108,19 @@ sf::Vector2f HUD::getPosition()
 		return temp;
 }
 // function to check if the car has gone past halfway/starting position
-void HUD::LapCheck(car p1)
+void HUD::LapCheck(car* p1)
 {
 	// if the car has passed one of the checkpoints
-	if (p1.DetectingLapCollisions(&fr_LapStart))
+	if (p1->DetectingLapCollisions(&fr_LapStart))
 	{
+		
 		// if the car is about to start
 		if (bGameStart == true && !bHalfway)
 		{
 			c_Laptimer.restart();
 			bGameStart = false;
 
-			tLaptimeText.setString(to_string(c_Laptimer.getElapsedTime().asSeconds()));
+			tLaptimeText.setString( to_string(c_Laptimer.getElapsedTime().asSeconds()));
 
 		}
 		// if the car is pass the start, and halfway (ends the lap)
@@ -122,25 +128,25 @@ void HUD::LapCheck(car p1)
 		{
 			c_Laptimer.restart();
 
+			fFirstTime = fLaptime;
+			tFirstLapText.setString("Previous Lap: " + to_string(fFirstTime));
+
 			if (fFirstTime < fBestTime)
 			{
 				fBestTime = fFirstTime;
-				tBestLapText.setString("Best Time: " + to_string(fBestTime));
+				tBestLapText.setString("Best Time: " + to_string(fBestTime) );
 			}
 
-			fFirstTime = fLaptime;
-			tFirstLapText.setString(tLaptimeText.getString());
-
 			bHalfway = false;
-
 
 		}
 	}
 	// if the car is halfway
-	else if (p1.DetectingLapCollisions(&fr_Halfway))
+	else if (p1->DetectingLapCollisions(&fr_Halfway))
 	{
 		if (!bHalfway)
 		{
+			
 			bHalfway = true;
 		}
 	}

@@ -32,6 +32,7 @@ class Game : public Drawable
 		Sprite m_Background; //!<  holds the current texture needed for the background
 		vector<Tyres*> m_TyreWall;
 		bool m_bStartGame;
+		bool check = false;
 	public:
 		HUD m_HUD; //!< HUD for the game
 
@@ -48,7 +49,8 @@ class Game : public Drawable
 		  void SpawnTyre(Vector2f Pos);
 		  void draw(RenderTarget &target, RenderStates states) const;
 		  void update(float timePass);
-		  bool DetectingLapCollisions(FloatRect *other)
+		  bool DetectingLapCollisions(FloatRect *other);
+		  void ViewLimits(View* View, Vector2f CarPos);
 		  
 
 

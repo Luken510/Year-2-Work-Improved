@@ -36,15 +36,15 @@ public:
 	Virtual function collides
 	\param *other. used for double dispatch - base class
 	*/
-	bool collides(Collidable *other);
+	void collides(Collidable *other);
 	/**
 	Virtual function collides
 	\param *other. used for double dispatch - Tyre Class
 	*/
-	bool collides(Tyres *other);
+	void collides(Tyres *other);
 	void update(float timepassed);
 	void draw(RenderTarget &target, RenderStates states) const; //!< draw function
-	void setTyreTexture(vector<Texture>::iterator Texture); //!< function that sets the Tyres texture
+	void setTyreTexture(std::vector<Texture>::iterator Texture); //!< function that sets the Tyres texture
 	
 };
 

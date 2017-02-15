@@ -43,7 +43,7 @@ public:
 	void setTime3Position(float x, float y); //!< set the position of the third timer
 	void setRectPosition(float x, float y); //!< set the position of the Background
 	Vector2f getPosition(); //!< gets the position of the first laptimer
-	void LapCheck(car p1); //!< function to check if the car has gone past halfway/starting position
+	void LapCheck(car* p1); //!< function to check if the car has gone past halfway/starting position
 };
 
 #endif

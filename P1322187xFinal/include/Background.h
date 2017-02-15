@@ -27,7 +27,7 @@ public:
 
 	*/
 	
-	background(vector<Texture>::iterator GameBGTexture, Vector2f Pos); // include textureloader.h
+	background(vector<Texture>::iterator GameBGTexture, Vector2f Pos, float scale); // include textureloader.h
 };
 
 #endif

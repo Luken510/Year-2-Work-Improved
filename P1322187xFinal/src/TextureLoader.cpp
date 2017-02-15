@@ -2,7 +2,7 @@
 
 TextureLoader::TextureLoader()
 {
-	m_sBaseDirectory = "\\assets\\"; //Default base directory
+	m_sBaseDirectory = "./assets/"; //Default base directory
 	load();
 }
 
@@ -16,10 +16,10 @@ void TextureLoader::load() // Loads in all needed textures and adds them to the 
 {
 
 	vector<string>fileNames;
-	fileNames.push_back("pictures\\mainmenubg.png");
-	fileNames.push_back("pictures\\Tyre.png");
-	fileNames.push_back("pictures\\track.png");
-	fileNames.push_back("pictures\\car.png");
+	fileNames.push_back("pictures/mainmenubg.png");
+	fileNames.push_back("pictures/Tyre.png");
+	fileNames.push_back("pictures/track.png");
+	fileNames.push_back("pictures/car.png");
 
 	for (int i = 0; i < fileNames.size(); i++)
 	{

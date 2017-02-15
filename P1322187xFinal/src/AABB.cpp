@@ -95,7 +95,18 @@ Vector2f AABB::getFriction()
 	float A = m_vVel.x * fCoefficient * fGravity;
 	float B = m_vVel.y * fCoefficient * fGravity;
 
-	Vector2f frictionForce(A, B);
+	Vector2f friction(A, B);
 
-	return frictionForce; // Returns a reasonable friction vector
+	return friction; // Returns a reasonable friction vector
+}
+
+Vector2f AABB::RotateVectors(Vector2f V1, float angle)
+{
+	angle = angle * (3.1415 / 180);
+
+	Vector2f newRotatedVec;
+	newRotatedVec.x = ((V1.x * cosf(angle)) + (V1.y * -sinf(angle)));
+	newRotatedVec.y = ((V1.x * sinf(angle)) + (V1.y * cosf(angle)));
+
+	return newRotatedVec;
 }

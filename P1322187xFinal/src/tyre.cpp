@@ -25,9 +25,9 @@ Tyres::Tyres(Vector2f position, float inverseMass)
 	m_fInverseMass = inverseMass;
 	m_vAcceleration = Vector2f(0, 0);
 	m_vVel = Vector2f(0, 0);
-	radius = 20;
+	radius = 13;
 	m_TyreSprite.setPosition(position);
-	AABB::m_vPos = position;
+	m_vPos = position;
 	
 };
 // draw function
@@ -43,7 +43,7 @@ Virtual function collides
 \param *other. used for double dispatch - base class
 allows us to exploit ploymorphism, this is the base class function that will call the other collides function
 */
-bool Tyres::collides(Collidable *other)
+void Tyres::collides(Collidable *other)
 {
 	return other->collides(this);
 }
@@ -51,7 +51,7 @@ bool Tyres::collides(Collidable *other)
 Virtual function collides
 \param *other. used for double dispatch - Tyre Class
 */
-bool Tyres::collides(Tyres *other)
+void Tyres::collides(Tyres *other)
 {
 	// create tyre positions
 	Vector2f TyreA(m_TyreSprite.getPosition().x, m_TyreSprite.getPosition().y);
@@ -72,20 +72,19 @@ bool Tyres::collides(Tyres *other)
 
 	if (FinalDistance <= 0) // a collision has occured
 	{
-
 		Vector2f CollisionNorm = normaliseVectors(Distance);
 		
 		float newVel;
 		//New Velocity 
-		newVel = (-(1 + 0.5) * ( fDotProduct((m_vVel, other->m_vVel), CollisionNorm)) / (m_fInverseMass + other->m_fInverseMass));
+		newVel = (-(1 + 0.5) * ( fDotProduct(subtractVectors(m_vVel, other->m_vVel), CollisionNorm))) / (m_fInverseMass + other->m_fInverseMass);
 
 		m_vVel = addVectors(m_vVel, multiplyVectors(multiplyVectors(CollisionNorm, newVel), m_fInverseMass));
+		other->m_vVel = addVectors(other->m_vVel, multiplyVectors(multiplyVectors(CollisionNorm, newVel), other->m_fInverseMass));
 
 		// correcting the position
-		m_vPos - addVectors(m_vPos, multiplyVectors(CollisionNorm, FinalDistance));
+		m_vPos = addVectors(m_vPos, multiplyVectors(CollisionNorm, FinalDistance));
 	}
 
-	return false;
 }
 
 void Tyres::update(float timepassed)
@@ -100,4 +99,6 @@ void Tyres::update(float timepassed)
 void Tyres::setTyreTexture(vector<Texture>::iterator Texture) //!< function that sets the Tyres texture
 {
 	m_TyreSprite.setTexture(*Texture);
+	m_TyreSprite.setOrigin(m_TyreSprite.getLocalBounds().width / 2.0f, m_TyreSprite.getLocalBounds().height / 2.0f);
+	m_TyreSprite.setScale(2, 2);
 }

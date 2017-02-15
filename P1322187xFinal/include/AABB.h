@@ -47,7 +47,7 @@ public:
 	Vector2f multiplyVectors(Vector2f V1, float Scalar);
 	float magnitudeOfVector(Vector2f V1);
 	Vector2f normaliseVectors(Vector2f V1);
-
+	Vector2f RotateVectors(Vector2f V1, float angle);
 };
 
 

@@ -5,6 +5,8 @@
 
 #ifndef COLLIDABLE_H
 #define COLLIDABLE_H
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 //pre declare class Tyres
 class Tyres; 
 
@@ -13,14 +15,14 @@ class Tyres;
 This class is a virtual class, where is has no constructor and only contanis virtual functions
 This class will be used for double dispatch when finding collisions in game
 */
-class Collidable : public Drawable
+class Collidable : public sf::Drawable
 {
 
 public:
 
-	virtual bool collides(Collidable * other) = 0; //!< virtual function used for double dispatch - base class
-	virtual bool collides(Tyres * other) = 0; //!< virtual function to test a collision against the tyrewall
-
+	virtual void collides(Collidable * other) = 0; //!< virtual function used for double dispatch - base class
+	virtual void collides(Tyres * other) = 0; //!< virtual function to test a collision against the tyrewall
+	
 };
 
 
