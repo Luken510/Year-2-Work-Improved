@@ -33,7 +33,6 @@ int main()
 	Game gMaster; //!< create Game class, which controls all of our game objects and functions.
 
 	RenderWindow window(VideoMode(1024,768), "RadRacer", Style::Close | Style::Titlebar); //!< render window
-	window.setFramerateLimit(60);
 	float fTimePassed;
 
 
@@ -79,11 +78,11 @@ int main()
 			}
 
 		}
+		fTimePassed = timer.getElapsedTime().asSeconds();
 
-		if (timer.getElapsedTime().asSeconds() > 0.006)
+		if (fTimePassed > 0.0125)
 		{
 			
-			fTimePassed = timer.getElapsedTime().asSeconds();
 			gMaster.update(fTimePassed);
 			gMaster.ViewLimits(&MainGame, gMaster.getCarPos());
 
