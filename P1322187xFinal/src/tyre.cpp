@@ -25,7 +25,7 @@ Tyres::Tyres(Vector2f position, float inverseMass)
 	m_fInverseMass = inverseMass;
 	m_vAcceleration = Vector2f(0, 0);
 	m_vVel = Vector2f(0, 0);
-	radius = 13;
+	radius = 21;
 	m_TyreSprite.setPosition(position);
 	m_vPos = position;
 	
@@ -63,7 +63,7 @@ void Tyres::collides(Tyres *other)
 	//total of the radii
 	float SumOfRadii = RadiusA + RadiusB;
 	//calculating the distance between the two points - used to find the magnitude
-	Vector2f Distance = subtractVectors(TyreA, TyreB);
+	Vector2f Distance = subtractVectors(TyreB,TyreA);
 
 	// magnitude of the distance, - used to find the finaldistance
 	float DistMagnitude = magnitudeOfVector(Distance);
@@ -79,7 +79,7 @@ void Tyres::collides(Tyres *other)
 		newVel = (-(1 + 0.5) * ( fDotProduct(subtractVectors(m_vVel, other->m_vVel), CollisionNorm))) / (m_fInverseMass + other->m_fInverseMass);
 
 		m_vVel = addVectors(m_vVel, multiplyVectors(multiplyVectors(CollisionNorm, newVel), m_fInverseMass));
-		other->m_vVel = addVectors(other->m_vVel, multiplyVectors(multiplyVectors(CollisionNorm, newVel), other->m_fInverseMass));
+		other->m_vVel = addVectors(other->m_vVel, multiplyVectors(multiplyVectors(CollisionNorm, -newVel), other->m_fInverseMass));
 
 		// correcting the position
 		m_vPos = addVectors(m_vPos, multiplyVectors(CollisionNorm, FinalDistance));

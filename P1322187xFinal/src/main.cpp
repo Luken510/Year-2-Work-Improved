@@ -78,11 +78,11 @@ int main()
 			}
 
 		}
-		fTimePassed = timer.getElapsedTime().asSeconds();
+		
 
-		if (fTimePassed > 0.0125)
+		if (timer.getElapsedTime().asSeconds() > 0.0125)
 		{
-			
+			fTimePassed = timer.getElapsedTime().asSeconds();
 			gMaster.update(fTimePassed);
 			gMaster.ViewLimits(&MainGame, gMaster.getCarPos());
 

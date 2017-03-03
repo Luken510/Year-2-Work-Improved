@@ -199,7 +199,7 @@ void Game::update(float timePass)
 			}
 
 		}
-
+		std::cout << "The cars current accelration = " << m_Player1Car.m_iPower << endl;
 		m_HUD.LapCheck(&m_Player1Car);
 		m_HUD.Update();
 

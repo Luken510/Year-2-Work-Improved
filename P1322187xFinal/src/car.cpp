@@ -26,7 +26,6 @@ calls the minMax function
 */
 car::car()
 {
-	//m_Sprite.setOrigin(m_Sprite.getLocalBounds().width / 2.0f, m_Sprite.getLocalBounds().height / 2.0f); move to set texture
 }
 
 car::car(Vector2f vPos, Vector2f vAcce, float InvMass, Vector2f Velo)
@@ -37,18 +36,18 @@ car::car(Vector2f vPos, Vector2f vAcce, float InvMass, Vector2f Velo)
 	m_vVel = Velo;
 	m_fRotationAngle = 0;
 	m_iGear = 0;
-	m_iPower = 1200;
+	m_iPower = 1300;
 
 	m_Sprite.setOrigin(30, 20);
 	m_Sprite.setPosition(m_vPos);
 	m_Sprite.scale(1, 1);
 
 	//Sets rates of acceleration for each gear - more power the earlier the gear, to similate the quick change between lower gears in a car
-	m_aiAccelerationPower[0] = 1600;
-	m_aiAccelerationPower[1] = 1300;
-	m_aiAccelerationPower[2] = 1000;
-	m_aiAccelerationPower[3] = 700;
-	m_aiAccelerationPower[4] = 500;
+	m_aiAccelerationPower[0] = 1700;
+	m_aiAccelerationPower[1] = 1400;
+	m_aiAccelerationPower[2] = 1100;
+	m_aiAccelerationPower[3] = 800;
+	m_aiAccelerationPower[4] = 600;
 
 	m_afGears[0] = 0.4;
 	m_afGears[1] = 0.5f;
@@ -186,7 +185,7 @@ void car::Update(float fTimePassed)
 
 		if (m_iGear == -1) // if the car is revsering
 		{
-			m_iPower = 1000;
+			m_iPower = 1100;
 			m_vAcceleration = subtractVectors(multiplyVectors(m_RotationVector, -m_iPower), Friction);
 		}
 
